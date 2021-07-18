@@ -25,7 +25,7 @@ public class Battle {
         List<Individuum> list1 = Combat.initiativeList(list);
         //List<Integer> indices = new ArrayList<Integer>();
         for (Individuum indi : list1) {
-            System.out.println(indi.getName() + " has: " + indi.getInitiative() + " initiative and " + indi.getHealth());
+            System.out.println(indi.getName() + " has: " + indi.getInitiative() + " initiative and " + indi.getHealth()+"HP");
 
         }
         var rand = new Random();

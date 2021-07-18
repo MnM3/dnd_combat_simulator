@@ -16,6 +16,7 @@ abstract public class Individuum implements Comparable {
     private boolean dead = false;
     private int initiative;
     private Weapon weapon;
+    private int strength_modifier;
 
     public boolean getDead()
     {
@@ -61,7 +62,15 @@ abstract public class Individuum implements Comparable {
         this.initiative = initiative;
     }
 
-    public Individuum(String name,int health, int spells, int ac, int attackBonus, int initiativeModifier, Weapon weaponlist) {
+    public int getStrength_modifier() {
+        return strength_modifier;
+    }
+
+    public void setStrength_modifier(int strength_modifier) {
+        this.strength_modifier = strength_modifier;
+    }
+
+    public Individuum(String name, int health, int spells, int ac, int attackBonus, int initiativeModifier, Weapon weaponlist, int strengthMod) {
         this.name = name;
         this.health = health;
         this.spells = spells;
@@ -70,6 +79,7 @@ abstract public class Individuum implements Comparable {
         this.initiativeModifier = initiativeModifier;
         this.weapon = weaponlist;
         this.initiative = initiativeModifier+new Random().nextInt(20)+1;
+        this.strength_modifier = strengthMod;
     }
 
     public int getInitiativeModifier() {
@@ -126,7 +136,7 @@ abstract public class Individuum implements Comparable {
     public int attackDamage(Weapon weapon) {
         int damage = weapon.getDamage();
         int dice = weapon.getDice();
-        int applied_damage = Combat.die(damage) * dice;
+        int applied_damage = Combat.die(damage) * dice + this.strength_modifier;
         System.out.println(this.name  + " dealt "+ applied_damage+ " damage!");
         return applied_damage;
     }

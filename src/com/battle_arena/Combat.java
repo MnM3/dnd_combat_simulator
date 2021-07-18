@@ -46,6 +46,14 @@ public class Combat {
         return list;
     }
 
+    public static int checkNumberOfDead(List<Individuum> list) {
+        int dead = 0;
+        for (Individuum ind : list) {
+            if(ind.getDead()) dead++;
+        }
+        return dead;
+    }
+
     public static boolean checkAlldead(List<Individuum> list) {
         boolean allDead  = true;
         for (Individuum ind : list) {

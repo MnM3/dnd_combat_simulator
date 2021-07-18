@@ -10,9 +10,11 @@ import java.util.Random;
 
 public class RandomGoblin extends Individuum implements Comparable {
 
+    static Random random = new Random();
+
     public RandomGoblin() {
 
-        super("Goblinoid_"+new Random().nextInt(1000),8,1,12,1,2,new Weapon(5,1,"Club",2,4));
+        super("Goblinoid_"+new Random().nextInt(1000),3+random.nextInt(6),1,12,1,2,new Weapon(5,1,"Club",2,4), 2);
     }
 
     @Override

@@ -1,3 +1,4 @@
+import StringUtil.StringUtil;
 import com.battle_arena.Battle;
 import com.battle_arena.Combat;
 import com.battle_arena.Individuum;
@@ -17,7 +18,7 @@ public class Main {
         List<Individuum> badies2 = new ArrayList<>();
         List<Integer> deadCountsPerFight = new ArrayList<>();
 
-        int foeCount = 4;
+        int foeCount = 5;
         int goodGuysWins = 0;
         int badGuysWins = 0;
 

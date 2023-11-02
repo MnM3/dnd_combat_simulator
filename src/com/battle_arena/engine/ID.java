@@ -1,2 +1,6 @@
-package com.battle_arena.engine;public enum ID {
+package com.battle_arena.engine;
+
+public enum ID {
+    Player(),
+    Enemy();
 }

@@ -12,6 +12,11 @@ public class Battle {
     //private List<Weapon> wappen = new ArrayList<Weapon>();
     private Weapon weapon_1 = new Weapon(6,1,"Sword", 3,20);
 
+    /**
+     * Makes a battle and let's the battle run. happening just inside of the constructor. Which is bad.
+     * @param goodies   List of individuals that mark the good side.
+     * @param badies    List of individuals that mark the bad side.
+     */
     public Battle(List<Individuum> goodies, List<Individuum> badies) {
         this.good_Fighter = goodies;
         this.bad_fighter = badies;

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.battle_arena.misc.Position;
+
 public class Combat {
     public static boolean roleAttack(Individuum attacker, Individuum defender) {
         int atk_bonus = attacker.getAttackBonus();
@@ -16,6 +18,15 @@ public class Combat {
         }
         System.out.println(attacker.getName()+ " missed!");
         return success;
+    }
+    
+    public static void moveAction(Individuum attacker, Individuum defender) {
+    	Position distance = Position.distanceVector(attacker.getPosition(), defender.getPosition());
+    	
+    }
+    
+    public static void moveAction(Individuum indi, Position goal_position) {
+    	
     }
 
     public static void attackAction(Individuum attacker, Individuum defender) {

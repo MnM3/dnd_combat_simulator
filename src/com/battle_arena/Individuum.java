@@ -4,10 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.battle_arena.enviroment.Battlefield;
+import com.battle_arena.enviroment.Tile;
+import com.battle_arena.exceptions.OutOfBattlefieldDimensionException;
+import com.battle_arena.misc.Position;
+
 abstract public class Individuum implements Comparable {
 
     private String name;
     private int health;
+    //TODO: Spels need Refactoring. (And Implementation :))
+    private int speed;
     private int spells;
     private int ac;
     private int attackBonus;
@@ -17,7 +24,57 @@ abstract public class Individuum implements Comparable {
     private int initiative;
     private Weapon weapon;
     private int strength_modifier;
+    private Position position;
+    private Battlefield battlefield;
 
+    public Battlefield getBattlefield() {
+		return battlefield;
+	}
+
+	public void setBattlefield(Battlefield battlefield) {
+		this.battlefield = battlefield;
+	}
+
+	public void move(int x, int y) throws OutOfBattlefieldDimensionException {
+		verify_inside_dimension(this.position.getPos_x() + x, this.position.getPos_y() + y);
+		this.position.move(x, y);
+	}
+	
+	public void verify_inside_dimension(int x, int y) throws OutOfBattlefieldDimensionException {
+		if (battlefield == null) throw new NullPointerException("There is no Battlefield to be placed on");
+		if (
+    			x < battlefield.getDim_x() || 
+    			x > battlefield.getDim_x()
+    		) 	throw new OutOfBattlefieldDimensionException("The x Dimension of the position is to high or to small, place some");
+    	if (
+    			y < battlefield.getDim_y() || 
+    			y > battlefield.getDim_y()
+    		)	throw new OutOfBattlefieldDimensionException("The y Dimension of the position is to high or to small");
+	}
+	
+	public void take_action() {
+		
+	}
+	
+    public void setPosition(Position pos) throws OutOfBattlefieldDimensionException {
+    	verify_inside_dimension(pos.getPos_x(), pos.getPos_y());
+    	battlefield.move_away(this);
+    	this.position = pos;
+    	battlefield.move_to(this);
+    }
+    
+    public Position getPosition () {
+    	return this.position;
+    }
+    
+    public void setXposition(int x) {
+    	this.position.x = x;
+    }
+    
+    public void setYposition(int y) {
+    	this.position.y = y;
+    }
+    
     public boolean getDead()
     {
         return this.dead;
@@ -42,7 +99,6 @@ abstract public class Individuum implements Comparable {
     public int compareTo(Individuum e2) {
         Individuum e1 = this;
         if (e2 == null) throw new NullPointerException();
-        if (e1 == null) throw new NullPointerException();
         return e2.getInitiative() - e1.getInitiative();
     }
 

@@ -21,7 +21,7 @@ public class Game extends Canvas implements Runnable {
         new Window(WIDTH, HEIGHT, "Let's bild a simulator", this);
 
         handler.addObject(new Player(WIDTH/2-32,HEIGHT/2-32, ID.Player));
-        handler.addObject(new Grid(100, 100, ID.Enemy));
+        handler.addObject(new Grid(10, 10, 15, 2, ID.Enemy));
 
     }
 
@@ -47,7 +47,8 @@ public class Game extends Canvas implements Runnable {
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
         long timer = System.currentTimeMillis();
-        int frames = 0;
+        @SuppressWarnings("unused")
+		int frames = 0;
         while(running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;

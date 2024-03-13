@@ -1,8 +1,9 @@
-import StringUtil.StringUtil;
+
 import com.battle_arena.Battle;
 import com.battle_arena.Combat;
 import com.battle_arena.Individuum;
 import com.battle_arena.Weapon;
+import com.battle_arena.exceptions.OutOfBattlefieldDimensionException;
 import com.battle_arena.foe.RandomGoblin;
 import com.battle_arena.foe.Random_Barbau_half;
 import com.battle_arena.goodies.Fighter;
@@ -12,17 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main (String[] args) {
+    public static void main (String[] args) throws OutOfBattlefieldDimensionException {
         List<Individuum> goodies = new ArrayList<>();
         List<Individuum> badies = new ArrayList<>();
         List<Individuum> badies2 = new ArrayList<>();
         List<Integer> deadCountsPerFight = new ArrayList<>();
 
-        int foeCount = 5;
+        int foeCount = 3;
         int goodGuysWins = 0;
         int badGuysWins = 0;
+        
+        int numBattles = 1000;
 
-        for(int f =0; f<100; f++) {
+        for(int f =0; f<numBattles; f++) {
             goodies = new ArrayList<>();
             badies = new ArrayList<>();
             GoodWife goodie = new GoodWife();
@@ -46,6 +49,7 @@ public class Main {
             }
 
             Battle battle = new Battle(goodies, badies);
+            battle.fight_till_death();
             deadCountsPerFight.add(Combat.checkNumberOfDead(goodies));
             if (Combat.checkAlldead(goodies)) {
                 badGuysWins++;

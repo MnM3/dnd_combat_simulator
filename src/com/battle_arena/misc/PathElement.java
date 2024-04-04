@@ -41,7 +41,14 @@ public class PathElement {
 	public void setDistance_goal(int distance_goal) {
 		this.distance_to_goal = distance_goal;
 	}
-	
-	
+
+	public boolean is_adjacent(PathElement pe) {
+		int distance = Position.manhatten_distance(this.getPos(), pe.getPos());
+		if (distance == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 }

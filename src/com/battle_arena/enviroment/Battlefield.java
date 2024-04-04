@@ -2,6 +2,7 @@ package com.battle_arena.enviroment;
 
 import com.battle_arena.Battle;
 import com.battle_arena.Individuum;
+import com.battle_arena.exceptions.OutOfBattlefieldDimensionException;
 import com.battle_arena.misc.Position;
 
 import javax.print.DocFlavor;
@@ -38,10 +39,42 @@ public class Battlefield {
     }*/
     
     public void move_away(Individuum indi) {
-    	Position pos = indi.getPosition();
-    	int x = pos.getPos_x();
-    	int y = pos.getPos_y();
-    	field[x][y].remove_occpuant(indi);
+        try {
+            Position pos = indi.getPosition();
+            int x = pos.getPos_x();
+            int y = pos.getPos_y();
+            field[x][y].remove_occpuant(indi);
+        } catch (NullPointerException e) {
+            if (indi.getPosition() == null) {
+                System.out.println("The Individuum has no po");
+            } else {
+                throw new NullPointerException("Can not invoke move away in battlefield, something that shouldnt be null is null.");
+            }
+
+        }
+    }
+    //TODO: Refactor the function also exists in Individuum -- The one at Individuum is deprecated
+    public boolean verify_inside_dimension_boolean(int x, int y) {
+        if (this == null) throw new NullPointerException("There is no Battlefield to verify dimensions");
+        if (
+                x < 0 ||
+                x > this.getDim_x()
+        ) 	return false;
+        if (
+                y < 0 ||
+                y > this.getDim_y()
+        )	return false;
+        return true;
+    }
+    public void verify_inside_dimension(int x, int y) throws OutOfBattlefieldDimensionException {
+        if (this == null) throw new NullPointerException("There is no Battlefield to be placed on");
+        if (
+                x < 0 || x >= this.getDim_x()
+        ) 	throw new OutOfBattlefieldDimensionException("The x Dimension of the position is to high or to small, place some");
+        if (
+                y < 0 ||
+                        y >= this.getDim_y()
+        )	throw new OutOfBattlefieldDimensionException("The y Dimension of the position is to high or to small");
     }
     
     public void move_to(Individuum indi) {

@@ -1,13 +1,22 @@
 package com.battle_arena.misc;
 
 public class Position {
-	
+
 	public int x;
 	public int y;
 	
 	public Position(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	public static boolean equals(Position pos1, Position pos2) {
+		if (pos1.getPos_x() == pos2.getPos_x() && pos1.getPos_y() == pos2.getPos_y()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public int getPos_x() {
@@ -47,11 +56,16 @@ public class Position {
 		
 		return Math.sqrt(c_squared);
 	}
-	
+
+	//TODO refactor -- pre condition for this function may be confusing (it confused me) put this functionality inside the other function. no
+	//					overload needed
 	public static int manhatten_distance(Position vector) {
 		return vector.getPos_x() + vector.getPos_y();
 	}
-	
+
+	public static int manhatten_distance(Position from, Position to) {
+		return manhatten_distance(distanceVector(from, to));
+	}
 	public static double diagonal_magnitude(int x, int y) {
 		double a_squared = Math.pow(x, 2);
 		double b_squared = Math.pow(y, 2);

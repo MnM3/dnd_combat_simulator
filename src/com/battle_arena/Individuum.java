@@ -43,11 +43,11 @@ abstract public class Individuum implements Comparable {
 	public void verify_inside_dimension(int x, int y) throws OutOfBattlefieldDimensionException {
 		if (battlefield == null) throw new NullPointerException("There is no Battlefield to be placed on");
 		if (
-    			x < battlefield.getDim_x() || 
+                x < 0 ||
     			x > battlefield.getDim_x()
     		) 	throw new OutOfBattlefieldDimensionException("The x Dimension of the position is to high or to small, place some");
     	if (
-    			y < battlefield.getDim_y() || 
+    			y < 0 ||
     			y > battlefield.getDim_y()
     		)	throw new OutOfBattlefieldDimensionException("The y Dimension of the position is to high or to small");
 	}

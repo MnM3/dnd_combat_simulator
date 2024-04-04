@@ -17,8 +17,8 @@ public class Grid extends GameObject {
         super(x, y, id);
         this.dim_x = dim_x;
         this.dim_y = dim_y;
-        System.out.println(System.getProperty("user.dir") + "\\Assets\\");
-        String path = System.getProperty("user.dir") + "\\Assets\\";
+        System.out.println(System.getProperty("user.dir") + File.separator + ".." + File.separator + "Assets" + File.separator);
+        String path = System.getProperty("user.dir") + File.separator + ".." + File.separator + "Assets" + File.separator;
         try {
             //bi = ImageIO.read(new File(path , "Number_1.png"));
             bi = ImageIO.read(new File(path, "Grid_cell.png"));

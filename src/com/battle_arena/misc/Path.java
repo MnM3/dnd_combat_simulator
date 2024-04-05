@@ -27,6 +27,8 @@ public class Path {
 		this.start = start;
 		this.goal = goal;
 		PathElement start_as_path_element = new PathElement(start);
+		start_as_path_element.distance_to_start = 0;
+		start_as_path_element.setDistance_goal(Position.manhatten_distance(Position.distanceVector(start_as_path_element.getPos(), this.goal)));
 		//populate graph
 		
 		generate_graph(start_as_path_element, field); 
@@ -37,11 +39,13 @@ public class Path {
 			System.out.println(pe.getPos_x() + ", " + pe.getPos_y());
 		}
 		System.out.println(Position.equals(this.goal, new Position(9, 7)));
+		System.out.println(this.goal.getPos_x() + " " + this.goal.getPos_y() + " " + this.goal.getPos_x() + " " + this.goal.getPos_y());
 		PathElement goal_pe = null;
 		for (PathElement pe : graph) {
 			if (Position.equals(pe.getPos(), this.goal)) {
 				//get_Path_from_graph(pe);
 				System.out.println("found the goal!");
+				System.out.println("This is start: " + start.getPos_x()+ ", " + start.getPos_y());
 				goal_pe = pe;
 			}
 		}
@@ -62,38 +66,46 @@ public class Path {
 		//find start for path
 		PathElement temp_pathelement = current_pe;
 
+		if (Position.equals(current_pe.getPos(), this.start)) {
+			return;
+		}
+
 		ArrayList<PathElement> adjacent_tiles = new ArrayList<PathElement>();
 		int closest_distance = field.getDim_x() * field.getDim_y() + 1;
-		for(PathElement pe : graph) {
+		for (PathElement pe : graph) {
 			//we can assume
-			if (pe.is_adjacent(temp_pathelement)) {
+			if (pe.is_adjacent(temp_pathelement) && pe.distance_to_start <= temp_pathelement.distance_to_start) {
 				//if it has the smallest distance
 				//if (pe.distance_to_start < closest_distance) {
 				adjacent_tiles.add(pe);
 				//}
 			}
 		}
+		if (adjacent_tiles.size() == 0) {
+			return;
+		}
+		System.out.println("adjacent tile count: " + adjacent_tiles.size());
+		System.out.println(temp_pathelement.distance_to_start);
 		for (PathElement ape : adjacent_tiles) {
-			if(ape.distance_to_start < closest_distance) {
+			System.out.println(ape.distance_to_start);
+			if (ape.distance_to_start < closest_distance) {
 				temp_pathelement = ape;
 				closest_distance = ape.distance_to_start;
 			}
 		}
 
 		path.add(temp_pathelement);
+		//System.out.println(path.size());
 		if (temp_pathelement.getPos().equals(start)) {
 			return;
 		} else {
 			get_Path_from_graph(temp_pathelement);
 		}
 
-
 	}
-
-
-	
 	//TODO: I have a feeling, that this should be part of the battlefield class
 	public void generate_graph(PathElement pos, Battlefield battle) { //
+		System.out.println("Position:" + pos.getPos_x() + ", " + pos.getPos_y());
 		if (this.reached == true) return;
 		List<PathElement> free_adjacent_positions = new ArrayList<PathElement>();
 		List<PathElement> temp_list = new ArrayList<PathElement>();
@@ -112,6 +124,7 @@ public class Path {
 					//System.out.println(temp_pos.getPos_x() + ", " + temp_pos.getPos_y());
 				}
 			} catch (OutOfBattlefieldDimensionException e) {
+				System.out.println("OUT OF BATTLEFIELD");
 				return;
 			}
 		}
@@ -122,17 +135,35 @@ public class Path {
 			//TODO this part is devoid of logic (this is the curlprit of all problems)
 			Position to_start_distance = Position.distanceVector(this.start, adj_pos.getPos());
 			Position to_goal_distance = Position.distanceVector(this.goal , adj_pos.getPos());
-			adj_pos.setDistance_goal(Position.manhatten_distance(to_start_distance));
+			//adj_pos.setDistance_start(Position.manhatten_distance(to_start_distance));
+			adj_pos.setDistance_start(pos.getDistance_to_start() + 1);
 			adj_pos.setDistance_goal(Position.manhatten_distance(to_goal_distance));
+			System.out.println(this.goal.getPos_x() + ", " + this.goal.getPos_y() + "------ Goal");
+			System.out.println(adj_pos.getPos_x() + ", " + adj_pos.getPos_y() + "-------adj position");
 			if (adj_pos.getDistance_to_goal() == 0) {
+				//System.out.println(adj_pos.getPos_x() + ", " + adj_pos.getPos_y());
+				//System.out.println(adj_pos.getDistance_to_goal());
+				//System.out.println(to_goal_distance.getPos_x() + ", " + to_goal_distance.getPos_y());
 				this.reached = true;
 			}
-			graph.add(adj_pos);
+			if (!graph.contains(adj_pos))
+				graph.add(adj_pos);
+		}
+		System.out.println("-----------------------------------");
+		//TODO delegate best tile -- Tile with the shortest distance to goal
+		int max_distance = field.getDim_x() * field.getDim_y();
+		PathElement delegate = null;
+		for (PathElement pe : graph) {
+			if (pe.getDistance_to_goal() < max_distance) {
+				delegate = pe;
+				max_distance = delegate.getDistance_to_goal();
+			}
 		}
 
-		for (PathElement adj_pos : free_adjacent_positions) {
+		generate_graph(delegate, battle);
+		/*for (PathElement adj_pos : free_adjacent_positions) {
 			generate_graph(adj_pos, battle);
-		}
+		}*/
 
 		
 		/*

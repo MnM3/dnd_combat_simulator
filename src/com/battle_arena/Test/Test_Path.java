@@ -28,7 +28,7 @@ public class Test_Path {
         individuum.setPosition(new Position(2, 2));
         Path path = new Path(individuum, new Position(9,9));
 
-        path.findPath(individuum.getPosition(), new Position(9,7));
+        path.findPath(individuum.getPosition(), new Position(7,9));
         return;
     }
 

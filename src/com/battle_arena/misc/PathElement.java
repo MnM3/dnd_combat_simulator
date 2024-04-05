@@ -43,6 +43,7 @@ public class PathElement {
 	}
 
 	public boolean is_adjacent(PathElement pe) {
+
 		int distance = Position.manhatten_distance(this.getPos(), pe.getPos());
 		if (distance == 1) {
 			return true;

@@ -60,7 +60,7 @@ public class Position {
 	//TODO refactor -- pre condition for this function may be confusing (it confused me) put this functionality inside the other function. no
 	//					overload needed
 	public static int manhatten_distance(Position vector) {
-		return vector.getPos_x() + vector.getPos_y();
+		return Math.abs(vector.getPos_x()) + Math.abs(vector.getPos_y());
 	}
 
 	public static int manhatten_distance(Position from, Position to) {

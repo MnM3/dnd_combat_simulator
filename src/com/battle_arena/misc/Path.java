@@ -159,7 +159,14 @@ public class Path {
 				max_distance = delegate.getDistance_to_goal();
 			}
 		}
+		/**
+		 * Zwei Wege den Pfad ein bisschern schöner zu machen:
+		 * 		Weg 1: Wir nehmen anstatt der Manhatten distance zum Ziel die Luftlinie
+		 * 		Weg 2: Wir sammeln adjacent tiles mit der entsprechenden Nähe zum Ziel und wählen bei gleicher
+		 * 			Entfernung einen Zufälligen Kandidaten als Delegate
+		 */
 
+		//TODO Testen ob lokale Minima existieren (meine Vermutung ist: ja, sie existieren)
 		generate_graph(delegate, battle);
 		/*for (PathElement adj_pos : free_adjacent_positions) {
 			generate_graph(adj_pos, battle);

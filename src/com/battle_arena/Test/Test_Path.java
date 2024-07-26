@@ -15,7 +15,7 @@ public class Test_Path {
     }
     private static void test_path() throws OutOfBattlefieldDimensionException {
         //create battlefield, give two Positions
-        Battlefield battlefield = new Battlefield(11, 11);
+        Battlefield battlefield = new Battlefield(150, 150);
         Individuum individuum = new Fighter("Test",
                 24,
                 0,
@@ -28,7 +28,7 @@ public class Test_Path {
         individuum.setPosition(new Position(2, 2));
         Path path = new Path(individuum, new Position(9,9));
 
-        path.findPath(individuum.getPosition(), new Position(7,9));
+        path.findPath(individuum.getPosition(), new Position(99,87));
         return;
     }
 

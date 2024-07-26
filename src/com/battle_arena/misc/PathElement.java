@@ -4,7 +4,7 @@ public class PathElement {
 	Position pos;
 	
 	int distance_to_start;
-	int distance_to_goal;
+	double distance_to_goal;
 	
 	public PathElement(Position pos) {
 		this.pos = pos;
@@ -34,11 +34,11 @@ public class PathElement {
 		this.distance_to_start = distance_start;
 	}
 
-	public int getDistance_to_goal() {
+	public double getDistance_to_goal() {
 		return distance_to_goal;
 	}
 
-	public void setDistance_goal(int distance_goal) {
+	public void setDistance_goal(double distance_goal) {
 		this.distance_to_goal = distance_goal;
 	}
 

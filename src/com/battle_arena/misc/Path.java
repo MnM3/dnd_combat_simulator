@@ -137,13 +137,10 @@ public class Path {
 			Position to_goal_distance = Position.distanceVector(this.goal , adj_pos.getPos());
 			//adj_pos.setDistance_start(Position.manhatten_distance(to_start_distance));
 			adj_pos.setDistance_start(pos.getDistance_to_start() + 1);
-			adj_pos.setDistance_goal(Position.manhatten_distance(to_goal_distance));
+			adj_pos.setDistance_goal(Position.diagonal_magnitude(to_goal_distance));
 			System.out.println(this.goal.getPos_x() + ", " + this.goal.getPos_y() + "------ Goal");
 			System.out.println(adj_pos.getPos_x() + ", " + adj_pos.getPos_y() + "-------adj position");
 			if (adj_pos.getDistance_to_goal() == 0) {
-				//System.out.println(adj_pos.getPos_x() + ", " + adj_pos.getPos_y());
-				//System.out.println(adj_pos.getDistance_to_goal());
-				//System.out.println(to_goal_distance.getPos_x() + ", " + to_goal_distance.getPos_y());
 				this.reached = true;
 			}
 			if (!graph.contains(adj_pos))
@@ -151,7 +148,7 @@ public class Path {
 		}
 		System.out.println("-----------------------------------");
 		//TODO delegate best tile -- Tile with the shortest distance to goal
-		int max_distance = field.getDim_x() * field.getDim_y();
+		double max_distance = field.getDim_x() * field.getDim_y();
 		PathElement delegate = null;
 		for (PathElement pe : graph) {
 			if (pe.getDistance_to_goal() < max_distance) {

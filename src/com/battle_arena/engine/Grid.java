@@ -11,14 +11,14 @@ public class Grid extends GameObject {
     BufferedImage bi;
     BufferedImage grid;
     int dim_x;
-    int dim_y;
+	int dim_y;
 
     public Grid(int x, int y, int dim_x, int dim_y ,ID id) {
         super(x, y, id);
         this.dim_x = dim_x;
         this.dim_y = dim_y;
         System.out.println(System.getProperty("user.dir") + File.separator + ".." + File.separator + "Assets" + File.separator);
-        String path = System.getProperty("user.dir") + File.separator + ".." + File.separator + "Assets" + File.separator;
+        String path = System.getProperty("user.dir") + File.separator + File.separator + "Assets" + File.separator;
         try {
             //bi = ImageIO.read(new File(path , "Number_1.png"));
             bi = ImageIO.read(new File(path, "Grid_cell.png"));
@@ -47,4 +47,21 @@ public class Grid extends GameObject {
         g.drawImage(grid, this.x, this.y, null);
 
     }
+    
+    public int getDim_x() {
+		return dim_x;
+	}
+
+	public void setDim_x(int dim_x) {
+		this.dim_x = dim_x;
+	}
+
+	public int getDim_y() {
+		return dim_y;
+	}
+
+	public void setDim_y(int dim_y) {
+		this.dim_y = dim_y;
+	}
+    
 }

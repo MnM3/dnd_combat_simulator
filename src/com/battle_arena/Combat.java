@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.battle_arena.misc.Position;
+import com.battle_arena.misc.Pathing.Position;
 
 public class Combat {
     public static boolean roleAttack(Individuum attacker, Individuum defender) {

@@ -1,4 +1,4 @@
-package com.battle_arena.misc;
+package com.battle_arena.misc.Pathing;
 
 public class Position {
 

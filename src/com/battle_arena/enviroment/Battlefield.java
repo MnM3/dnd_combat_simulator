@@ -3,7 +3,7 @@ package com.battle_arena.enviroment;
 import com.battle_arena.Battle;
 import com.battle_arena.Individuum;
 import com.battle_arena.exceptions.OutOfBattlefieldDimensionException;
-import com.battle_arena.misc.Position;
+import com.battle_arena.misc.Pathing.Position;
 
 import javax.print.DocFlavor;
 import java.util.ArrayList;
@@ -16,8 +16,8 @@ public class Battlefield {
 
     public Battlefield(int height, int width) {
         this.field = new Tile[height][width];
-        dim_x = height;
-        dim_y = width;
+        dim_x = height - 1;
+        dim_y = width - 1;
         for(int i = 0; i < field.length; i++) {
             for (int k = 0; k < field[i].length; k++) {
                 field[i][k] = new Tile();
@@ -43,7 +43,7 @@ public class Battlefield {
             Position pos = indi.getPosition();
             int x = pos.getPos_x();
             int y = pos.getPos_y();
-            field[x][y].remove_occpuant(indi);
+            field[x][y].remove_occupant(indi);
         } catch (NullPointerException e) {
             if (indi.getPosition() == null) {
                 System.out.println("The Individuum has no po");
@@ -69,11 +69,11 @@ public class Battlefield {
     public void verify_inside_dimension(int x, int y) throws OutOfBattlefieldDimensionException {
         if (this == null) throw new NullPointerException("There is no Battlefield to be placed on");
         if (
-                x < 0 || x >= this.getDim_x()
+                x < 0 || x > this.getDim_x()
         ) 	throw new OutOfBattlefieldDimensionException("The x Dimension of the position is to high or to small, place some");
         if (
                 y < 0 ||
-                        y >= this.getDim_y()
+                        y > this.getDim_y()
         )	throw new OutOfBattlefieldDimensionException("The y Dimension of the position is to high or to small");
     }
     
@@ -81,7 +81,7 @@ public class Battlefield {
     	Position pos = indi.getPosition();
     	int x = pos.getPos_x();
     	int y = pos.getPos_y();
-    	field[x][y].remove_occpuant(indi);
+    	field[x][y].add_occupant(indi);
     }
     
     public int getDim_x() {

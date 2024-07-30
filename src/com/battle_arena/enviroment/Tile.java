@@ -21,7 +21,7 @@ public class Tile {
     	occupants.add(o);
     }
     
-    public void remove_occpuant(Object o) {
+    public void remove_occupant(Object o) {
     	occupants.remove(o);
     }
 

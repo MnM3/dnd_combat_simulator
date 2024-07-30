@@ -3,6 +3,9 @@ package com.battle_arena.engine;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import com.battle_arena.exceptions.OutOfBattlefieldDimensionException;
+import com.battle_arena.misc.Pathing.Position;
+
 public class KeyInput extends KeyAdapter {
 
     private Handler handler;
@@ -22,6 +25,17 @@ public class KeyInput extends KeyAdapter {
                 if(key == KeyEvent.VK_S) tempObject.setVelY(5);
                 if(key == KeyEvent.VK_A) tempObject.setVelX(-5);
                 if(key == KeyEvent.VK_D) tempObject.setVelX(5);
+            }
+            
+            if(tempObject.getId() == ID.Individuum) {
+            	IndividuumGameObject igo = (IndividuumGameObject) tempObject;
+            	if(key == KeyEvent.VK_SPACE)
+					try {
+						igo.getIndividuum().setPosition(new Position(8,8));
+					} catch (OutOfBattlefieldDimensionException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
             }
         }
 

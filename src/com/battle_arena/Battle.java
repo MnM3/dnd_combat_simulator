@@ -7,7 +7,7 @@ import java.util.Random;
 
 import com.battle_arena.enviroment.Battlefield;
 import com.battle_arena.exceptions.OutOfBattlefieldDimensionException;
-import com.battle_arena.misc.Position;
+import com.battle_arena.misc.Pathing.Position;
 
 public class Battle {
 
@@ -65,8 +65,6 @@ public class Battle {
         for (Individuum b: bad_fighter) {
         	b.setPosition(new Position (counter, 9));
         }
-        
-        
         
     }
     

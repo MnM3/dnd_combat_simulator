@@ -1,20 +1,26 @@
-package com.battle_arena.misc;
+package com.battle_arena.misc.Pathing;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.battle_arena.Individuum;
 import com.battle_arena.enviroment.Battlefield;
 import com.battle_arena.exceptions.OutOfBattlefieldDimensionException;
 
-public class Path {
+/*
+ * 	TODOS:
+ *  - right now tiles where something is standing on get ignored
+ * 
+ */
+
+public class PathSolver {
 	private List<PathElement> path;
 	private List<PathElement> graph;
 	private Position goal;
 	private Position start;
 	private boolean reached;
 	private Battlefield field;
-	public Path (Individuum indi, Position goal_position) {
+	//REFACTOR: PathSolver as name of this class -- otherwise too much confusion with the -- DONE 
+	public PathSolver (Individuum indi, Position goal_position) {
 		this.start = indi.getPosition();
 		this.goal = goal_position;
 		this.reached = false;
@@ -23,6 +29,20 @@ public class Path {
 		this.path = new ArrayList<PathElement>();
 	}
 	
+	public void resetSolver() {
+		this.reached = false;
+		this.graph = new ArrayList<PathElement>();
+		this.path = new ArrayList<PathElement>();
+	}
+	
+	public List<PathElement> getPath() {
+		return path;
+	}
+
+	public void setPath(List<PathElement> path) {
+		this.path = path;
+	}
+
 	public void findPath(Position start, Position goal) {
 		this.start = start;
 		this.goal = goal;
@@ -43,7 +63,6 @@ public class Path {
 		PathElement goal_pe = null;
 		for (PathElement pe : graph) {
 			if (Position.equals(pe.getPos(), this.goal)) {
-				//get_Path_from_graph(pe);
 				System.out.println("found the goal!");
 				System.out.println("This is start: " + start.getPos_x()+ ", " + start.getPos_y());
 				goal_pe = pe;
@@ -75,10 +94,7 @@ public class Path {
 		for (PathElement pe : graph) {
 			//we can assume
 			if (pe.is_adjacent(temp_pathelement) && pe.distance_to_start <= temp_pathelement.distance_to_start) {
-				//if it has the smallest distance
-				//if (pe.distance_to_start < closest_distance) {
 				adjacent_tiles.add(pe);
-				//}
 			}
 		}
 		if (adjacent_tiles.size() == 0) {
@@ -95,7 +111,6 @@ public class Path {
 		}
 
 		path.add(temp_pathelement);
-		//System.out.println(path.size());
 		if (temp_pathelement.getPos().equals(start)) {
 			return;
 		} else {
@@ -118,21 +133,19 @@ public class Path {
 			int temp_y = temp_pos.getPos_y();
 
 			try {
+				//REFACTOR?: exception should get thrown inside of the "verify_inside_dimension" and not outside.
 				field.verify_inside_dimension(temp_x, temp_y);
 				if (!(battle.getField()[temp_x][temp_y]).has_occupants() && !graph.contains(temp_pos)) {
 					free_adjacent_positions.add(temp_pos);
-					//System.out.println(temp_pos.getPos_x() + ", " + temp_pos.getPos_y());
 				}
+				
 			} catch (OutOfBattlefieldDimensionException e) {
 				System.out.println("OUT OF BATTLEFIELD");
-				return;
-			}
+				//return;
+			}			
 		}
 		
 		for (PathElement adj_pos : free_adjacent_positions) {
-			//int start_distance = pos.getDistance_start();
-			//adj_pos.setDistance_start(0);
-			//TODO this part is devoid of logic (this is the curlprit of all problems)
 			Position to_start_distance = Position.distanceVector(this.start, adj_pos.getPos());
 			Position to_goal_distance = Position.distanceVector(this.goal , adj_pos.getPos());
 			//adj_pos.setDistance_start(Position.manhatten_distance(to_start_distance));
@@ -157,24 +170,17 @@ public class Path {
 			}
 		}
 		/**
-		 * Zwei Wege den Pfad ein bisschern schöner zu machen:
-		 * 		Weg 1: Wir nehmen anstatt der Manhatten distance zum Ziel die Luftlinie
+		 * Wege den Pfad ein bisschern schöner zu machen:
+		 * 		Weg 1: Wir nehmen anstatt der Manhatten distance zum Ziel die Luftlinie -- implemented
 		 * 		Weg 2: Wir sammeln adjacent tiles mit der entsprechenden Nähe zum Ziel und wählen bei gleicher
 		 * 			Entfernung einen Zufälligen Kandidaten als Delegate
 		 */
 
-		//TODO Testen ob lokale Minima existieren (meine Vermutung ist: ja, sie existieren)
+		//TODO Testen ob lokale Minima existieren (meine Vermutung ist: ja, sie existieren) -- ich galube das ist mittlerweile behoben
 		generate_graph(delegate, battle);
 		/*for (PathElement adj_pos : free_adjacent_positions) {
 			generate_graph(adj_pos, battle);
 		}*/
-
-		
-		/*
-		 * Zuerst müssen wir Tiles finden die begehbar sind und Sinn ergeben. Wir gucken immer alle unsere umliegenden Tiles an und fügen dass hinzu welches 
-		 * am meisten Sinn ergibt. Das Tile was am meisten Sinn ergibt ist am kürzesten von dem Ursprung entfernt und 
-		*/
-		//return free_adjacent_positions;
 	}
 	
 	

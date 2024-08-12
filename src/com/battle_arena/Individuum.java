@@ -7,6 +7,7 @@ import java.util.Random;
 import com.battle_arena.enviroment.Battlefield;
 import com.battle_arena.enviroment.Tile;
 import com.battle_arena.exceptions.OutOfBattlefieldDimensionException;
+import com.battle_arena.misc.Pathing.PathSolver;
 import com.battle_arena.misc.Pathing.Position;
 
 abstract public class Individuum implements Comparable {
@@ -26,6 +27,7 @@ abstract public class Individuum implements Comparable {
     private int strength_modifier;
     private Position position;
     private Battlefield battlefield;
+    private PathSolver pathSolver;
 
     public Battlefield getBattlefield() {
 		return battlefield;
@@ -33,6 +35,20 @@ abstract public class Individuum implements Comparable {
 
 	public void setBattlefield(Battlefield battlefield) {
 		this.battlefield = battlefield;
+		this.pathSolver = new PathSolver(this, new Position(0,0));
+	}
+	
+	public void findPath(Position pos) {
+		this.pathSolver.findPath(this.getPosition(), pos);
+		
+	}
+	
+	public PathSolver getPathSolver() {
+		return pathSolver;
+	}
+
+	public void setPathSolver(PathSolver pathSolver) {
+		this.pathSolver = pathSolver;
 	}
 
 	public void move(int x, int y) throws OutOfBattlefieldDimensionException {

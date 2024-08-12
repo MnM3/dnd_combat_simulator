@@ -38,11 +38,19 @@ public class PathSolver {
 	public List<PathElement> getPath() {
 		return path;
 	}
+	
+	public Position getGoal() {
+		return goal;
+	}
+
+	public void setGoal(Position goal) {
+		this.goal = goal;
+	}
 
 	public void setPath(List<PathElement> path) {
 		this.path = path;
 	}
-
+	//TODO: Catch when goal is same as start
 	public void findPath(Position start, Position goal) {
 		this.start = start;
 		this.goal = goal;

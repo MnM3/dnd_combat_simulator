@@ -31,7 +31,7 @@ public class Game extends Canvas implements Runnable {
         //		We don't want to create a grid and pass it down to the Individuum and so on. We
         /////////// SETUP
         
-        Grid grid = new Grid(10, 10, 15, 15, ID.Grid);
+        Grid grid = new Grid(10, 10, 25,25, ID.Grid);
         
         CoordinateConverter converter = new CoordinateConverter(grid);
         
@@ -48,11 +48,13 @@ public class Game extends Canvas implements Runnable {
         
         individuum.setBattlefield(battlefield);
         individuum.setPosition(new Position(3,3));
+        individuum.findPath(new Position(5,5));
         
         /////////////////////
         handler.addObject(new Player(WIDTH/2-32,HEIGHT/2-32, ID.Player));
         handler.addObject(new Player (10, 10, ID.Player));
         IndividuumGameObject igo = new IndividuumGameObject(individuum, ID.Individuum);
+        igo.animator.createAnimationKeypointsFromPath(igo.getIndividuum().getPathSolver().getPath());
         handler.addObject(igo);
         handler.addObject(grid);
     }

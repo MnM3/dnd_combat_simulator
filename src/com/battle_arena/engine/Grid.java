@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Grid extends GameObject {
+public class Grid extends GameObject implements collidable {
 
     BufferedImage bi;
     BufferedImage grid;
@@ -62,6 +62,20 @@ public class Grid extends GameObject {
 
 	public void setDim_y(int dim_y) {
 		this.dim_y = dim_y;
+	}
+
+	@Override
+	public int get_Layer() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+	@Override
+	public boolean collison_occured(int real_x, int real_y) {
+		// TODO Auto-generated method stub
+		return false;
 	}
     
 }

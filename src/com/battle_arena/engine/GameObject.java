@@ -2,7 +2,7 @@ package com.battle_arena.engine;
 
 import java.awt.*;
 
-public abstract class GameObject {
+public abstract class GameObject implements collidable {
     protected int x, y;
     protected ID id;
     protected int velX, velY;
@@ -15,6 +15,7 @@ public abstract class GameObject {
 
     public abstract void tick();
     public abstract void render(Graphics g);
+    //abstract public boolean collision_occured(int real_x, int real_y);
 
     public void setX(int x) {
         this.x = x;
@@ -55,5 +56,7 @@ public abstract class GameObject {
     public int getVelY() {
         return velY;
     }
+
+	
 
 }

@@ -22,7 +22,7 @@ public class Combat {
     
     public static void moveAction(Individuum attacker, Individuum defender) {
     	Position distance = Position.distanceVector(attacker.getPosition(), defender.getPosition());
-    	
+    	Position.manhatten_distance(distance);
     }
     
     public static void moveAction(Individuum indi, Position goal_position) {

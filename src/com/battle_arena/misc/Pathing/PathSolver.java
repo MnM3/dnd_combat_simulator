@@ -36,7 +36,7 @@ public class PathSolver {
 	}
 	
 	public List<PathElement> getPath() {
-		return path;
+		return path.reversed();
 	}
 	
 	public Position getGoal() {

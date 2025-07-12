@@ -1,0 +1,11 @@
+TODOS:
+==========================
+state of the Project?
+- I think I was working on the round handler?
+- I added the mouse adapter, I think I wanted to add contect menues?
+	- like menues that can appear and you can click at?
+	--> Draw a graphic, make it check with what it collieded
+	--> MouseInput 
+	--> translate mouse coordinates into game coordinates
+==========================
+

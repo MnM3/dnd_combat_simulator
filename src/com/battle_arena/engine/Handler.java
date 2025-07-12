@@ -5,30 +5,40 @@ import java.util.LinkedList;
 
 public class Handler {
 
-    LinkedList<GameObject> object = new LinkedList<GameObject>();
+    LinkedList<GameObject> objects = new LinkedList<GameObject>();
+    RoundHandler roundHandler;
 
     public void tick() {
-        for(int i=0; i < object.size(); i++) {
-            GameObject tempObject = object.get(i);
+        for(int i=0; i < objects.size(); i++) {
+            GameObject tempObject = objects.get(i);
 
             tempObject.tick();
         }
     }
 
     public void render(Graphics g) {
-        for(int i = 0; i < object.size(); i++) {
-            GameObject tempObject = object.get(i);
+        for(int i = 0; i < objects.size(); i++) {
+            GameObject tempObject = objects.get(i);
 
             tempObject.render(g);
         }
     }
+    
+    public void addRoundhandler(GameObject object) {
+    	this.roundHandler = (RoundHandler) object;
+    	this.objects.add(object);
+    }
 
     public void addObject(GameObject object) {
-        this.object.add(object);
+        this.objects.add(object);
     }
 
     public void removeObject(GameObject object) {
-        this.object.remove();
+        this.objects.remove();
+    }
+    
+    public RoundHandler getRoundHandler() {
+    	return roundHandler;
     }
 
 }

@@ -9,6 +9,7 @@ import com.battle_arena.Weapon;
 import com.battle_arena.enviroment.Battlefield;
 import com.battle_arena.exceptions.OutOfBattlefieldDimensionException;
 import com.battle_arena.goodies.Fighter;
+import com.battle_arena.misc.AnimationState;
 import com.battle_arena.misc.CoordinateConverter;
 import com.battle_arena.misc.Pathing.Position;
 
@@ -21,12 +22,15 @@ public class Game extends Canvas implements Runnable {
     private boolean running = false;
 
     private Handler handler;
+    private RoundHandler roundHandler;
 
-    public Game() throws OutOfBattlefieldDimensionException {
+    public Game() throws OutOfBattlefieldDimensionException, IOException {
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
+        
 
-        new Window(WIDTH, HEIGHT, "Let's bild a simulator", this);
+        Window window = new Window(WIDTH, HEIGHT, "Let's bild a simulator", this);
+        this.addMouseListener(new MouseInput(this));
         //TODO: Create a level class, that setups everything correctly, right now some responsibilities are reveresed
         //		We don't want to create a grid and pass it down to the Individuum and so on. We
         /////////// SETUP
@@ -48,13 +52,19 @@ public class Game extends Canvas implements Runnable {
         
         individuum.setBattlefield(battlefield);
         individuum.setPosition(new Position(3,3));
-        individuum.findPath(new Position(5,5));
+        individuum.findPath(new Position(7,1));
         
         /////////////////////
+        roundHandler = new RoundHandler(); //RoundHandler.getInstance();
+        handler.addRoundhandler(roundHandler);
         handler.addObject(new Player(WIDTH/2-32,HEIGHT/2-32, ID.Player));
         handler.addObject(new Player (10, 10, ID.Player));
         IndividuumGameObject igo = new IndividuumGameObject(individuum, ID.Individuum);
+        igo.animator.setCurrentAnimationState(AnimationState.IDLE);
+        igo.animator.addAnimation(AnimationState.IDLE, 1, 6);
         igo.animator.createAnimationKeypointsFromPath(igo.getIndividuum().getPathSolver().getPath());
+        
+        roundHandler.addIndividuum(igo.getIndividuum());
         handler.addObject(igo);
         handler.addObject(grid);
     }
@@ -129,13 +139,13 @@ public class Game extends Canvas implements Runnable {
 
  
 
-    public static void main(String args[]) 
+    public static void main(String args[]) throws IOException 
     {
         try {
 			new Game();
 		} catch (OutOfBattlefieldDimensionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
     }
 }

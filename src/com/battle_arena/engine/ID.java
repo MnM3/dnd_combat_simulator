@@ -4,5 +4,6 @@ public enum ID {
     Player(),
     Enemy(),
 	Grid(),
-	Individuum();
+	Individuum(),
+	RoundHandler();
 }

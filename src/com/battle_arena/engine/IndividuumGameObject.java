@@ -2,6 +2,7 @@ package com.battle_arena.engine;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import com.battle_arena.Individuum;
 import com.battle_arena.engine.components.Animator;
@@ -51,6 +52,7 @@ public class IndividuumGameObject extends GameObject {
 		this.y = pos.getY();
 		
 		this.individuum = individuum;
+		this.individuum.setGameObject(this);
 		this.animator = new Animator(this);
 	}
 	
@@ -61,11 +63,12 @@ public class IndividuumGameObject extends GameObject {
 		if(nextPosition == null && animator.getAnimationIterator() != null && animator.getAnimationIterator().hasNext()) {
 			nextPosition = animator.getAnimationIterator().next();
 		} else if (nextPosition != null) { //already initialized
-			if (goPosition.getX() - nextPosition.getX() == 0 && goPosition.getX() - nextPosition.getY() == 0) {
+			if ((goPosition.getX() - nextPosition.getX()) == 0 && (goPosition.getY() - nextPosition.getY()) == 0) {
 				if(animator.getAnimationIterator().hasNext()) {
 					nextPosition = animator.getAnimationIterator().next();
 				} else {
 					nextPosition = null;
+					RoundHandler.getInstance().setActionDispatched(false);
 					this.velX = 0;
 					this.velY = 0;
 				}
@@ -99,17 +102,38 @@ public class IndividuumGameObject extends GameObject {
     }
 
     public void render(Graphics g) {
-        g.setColor(Color.white);
-        g.fillRect(x,y, 32, 32);
+    	BufferedImage bi = this.getAnimator().getCurrentFrame();
+    	g.drawImage(bi, x, y, x + bi.getWidth(),y + bi.getHeight(), 0, 0, bi.getWidth(), bi.getHeight(), null);
+        //old graphics: 
+    	//g.setColor(Color.white);
+        //g.fillRect(x,y, 32, 32);
+    }
+    
+    public Animator getAnimator() {
+    	return this.animator;
     }
 
 	public void setIndividuum(Individuum individuum) {
 		this.individuum = individuum;
+		this.individuum.setGameObject(this);
 	}
 	
 	public Individuum getIndividuum() {
 		return this.individuum;
 	}
+
+	@Override
+	public int get_Layer() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean collison_occured(int real_x, int real_y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 	
     

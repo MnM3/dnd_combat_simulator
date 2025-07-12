@@ -4,17 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.battle_arena.engine.IndividuumGameObject;
+import com.battle_arena.engine.components.GameComponent;
 import com.battle_arena.enviroment.Battlefield;
 import com.battle_arena.enviroment.Tile;
 import com.battle_arena.exceptions.OutOfBattlefieldDimensionException;
 import com.battle_arena.misc.Pathing.PathSolver;
 import com.battle_arena.misc.Pathing.Position;
 
-abstract public class Individuum implements Comparable {
+abstract public class Individuum extends GameComponent implements Comparable {
 
     private String name;
     private int health;
-    //TODO: Spels need Refactoring. (And Implementation :))
+    //TODO: Spells need Refactoring. (And Implementation :))
     private int speed;
     private int spells;
     private int ac;
@@ -28,8 +30,9 @@ abstract public class Individuum implements Comparable {
     private Position position;
     private Battlefield battlefield;
     private PathSolver pathSolver;
+    private ControlMode controlMode;
 
-    public Battlefield getBattlefield() {
+	public Battlefield getBattlefield() {
 		return battlefield;
 	}
 
@@ -38,9 +41,9 @@ abstract public class Individuum implements Comparable {
 		this.pathSolver = new PathSolver(this, new Position(0,0));
 	}
 	
+	//TODO: 
 	public void findPath(Position pos) {
 		this.pathSolver.findPath(this.getPosition(), pos);
-		
 	}
 	
 	public PathSolver getPathSolver() {
@@ -152,9 +155,18 @@ abstract public class Individuum implements Comparable {
         this.weapon = weaponlist;
         this.initiative = initiativeModifier+new Random().nextInt(20)+1;
         this.strength_modifier = strengthMod;
+        this.controlMode = ControlMode.PLAYER;
     }
 
-    public int getInitiativeModifier() {
+    public ControlMode getControlMode() {
+		return controlMode;
+	}
+
+	public void setControlMode(ControlMode controlMode) {
+		this.controlMode = controlMode;
+	}
+
+	public int getInitiativeModifier() {
         return initiativeModifier;
     }
 
@@ -179,8 +191,6 @@ abstract public class Individuum implements Comparable {
         if(this.health <= 0) this.dead = true;
     }
 
-
-
     public int getSpells() {
         return spells;
     }
@@ -189,7 +199,7 @@ abstract public class Individuum implements Comparable {
         this.spells = spells;
     }
 
-    public int getAc() {
+    public int getAc() { // AC = Armorclass
         return ac;
     }
 
